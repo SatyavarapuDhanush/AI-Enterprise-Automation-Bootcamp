@@ -1,0 +1,14 @@
+FILE_EXTENSION,DESTINATION_FOLDER
+.pdf,PDF
+.doc,Documents
+.docx,Documents
+.xlsx,Excel
+.xls,Excel
+.csv,Excel
+.ppt,PowerPoint
+.pptx,PowerPoint
+.jpg,Images
+.jpeg,Images
+.png,Images
+.mp4,Videos
+.zip,Archives

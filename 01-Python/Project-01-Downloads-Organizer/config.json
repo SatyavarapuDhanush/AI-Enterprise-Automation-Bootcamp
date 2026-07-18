@@ -1,0 +1,6 @@
+{
+    "source_folder":"test_data",
+    "create_log":true,
+    "generate_report": true,
+    "move_unknown_files": true
+}
