@@ -16,7 +16,6 @@ class APIClient:
         try:
             response = self.session.request(method, url, **kwargs)
             response.raise_for_status()
-            
             if response.status_code == 204 or not response.content:
                 return response.status_code
             return response.json()

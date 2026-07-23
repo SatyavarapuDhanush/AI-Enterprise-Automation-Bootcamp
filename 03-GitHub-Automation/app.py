@@ -33,6 +33,9 @@ class Main:
     
     def get_all_repositories(self):
         return self.github_service.list_repositories(visibility="all")
+
+    def get_repository_details(self, repo_name):
+        return self.github_service.repository_details(repo_name)
     
 if __name__ == "__main__":
     main = Main()
@@ -47,3 +50,9 @@ if __name__ == "__main__":
             print(f"Repository Name: {repo.get('name')}, URL: {repo.get('html_url')}, visibility: {repo.get('visibility')}")
             print("-" * 40)
 
+    repository_details = main.get_repository_details("IndianCulture")
+    print(f"Repository Details: {repository_details}")
+    if repository_details:
+        print(f"Repository Details: {repository_details.get('name')}")
+        print(f"Description: {repository_details.get('description')}")
+        print(f"Stars: {repository_details.get('stargazers_count')}")
