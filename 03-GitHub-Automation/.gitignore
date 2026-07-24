@@ -2,6 +2,8 @@
 .env
 .env.*
 
+**/reports/
+
 # Ignore Python cache & virtual environments
 __pycache__/
 *.pyc

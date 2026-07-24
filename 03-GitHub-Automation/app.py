@@ -6,6 +6,7 @@ load_dotenv()
 
 from src.GitHubService import GitHubService
 from src.api_client import APIClient
+from src.ReportGenerator import ReportGenerator
 
 
 class Main:
@@ -27,6 +28,7 @@ class Main:
         )
 
         self.github_service = GitHubService(client)
+        self.reports=ReportGenerator(output_dir="reports")
 
     def get_user_profile(self):
         return self.github_service.get_user_profile()
@@ -36,23 +38,34 @@ class Main:
 
     def get_repository_details(self, repo_name):
         return self.github_service.repository_details(repo_name)
+
+    def generate_reports(self):
+        repos=self.get_all_repositories()
+        user_profile=self.get_user_profile()
+        username=user_profile.get("login","unkwnon user") if isinstance(user_profile, dict) else str(user_profile)
+        if repos:
+            self.reports.generate_report(repos)
+            self.reports.generate_html(repos,username)
+        else:
+            print("No repositories found")
     
 if __name__ == "__main__":
     main = Main()
-    user_profile = main.get_user_profile()
-    if user_profile:
-        print(f"User Profile: {user_profile.get('login')}, Name: {user_profile.get('name')}")
+    main.generate_reports()
+    # user_profile = main.get_user_profile()
+    # if user_profile:
+    #     print(f"User Profile: {user_profile.get('login')}, Name: {user_profile.get('name')}")
     
-    repositories = main.get_all_repositories()
-    if repositories:
-        print(f"Total Repositories: {len(repositories)}")
-        for repo in repositories:
-            print(f"Repository Name: {repo.get('name')}, URL: {repo.get('html_url')}, visibility: {repo.get('visibility')}")
-            print("-" * 40)
+    # repositories = main.get_all_repositories()
+    # if repositories:
+    #     print(f"Total Repositories: {len(repositories)}")
+    #     for repo in repositories:
+    #         print(f"Repository Name: {repo.get('name')}, URL: {repo.get('html_url')}, visibility: {repo.get('visibility')}")
+    #         print("-" * 40)
 
-    repository_details = main.get_repository_details("IndianCulture")
-    print(f"Repository Details: {repository_details}")
-    if repository_details:
-        print(f"Repository Details: {repository_details.get('name')}")
-        print(f"Description: {repository_details.get('description')}")
-        print(f"Stars: {repository_details.get('stargazers_count')}")
+    # repository_details = main.get_repository_details("IndianCulture")
+    # print(f"Repository Details: {repository_details}")
+    # if repository_details:
+    #     print(f"Repository Details: {repository_details.get('name')}")
+    #     print(f"Description: {repository_details.get('description')}")
+    #     print(f"Stars: {repository_details.get('stargazers_count')}")
